@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca-demo-deployment
+  labels:
+    app: ca-nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ca-nginx
+  template:
+    metadata:
+      labels:
+        app: ca-nginx
+    spec:
+      containers:
+      - name: ca-nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "200Mi"

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-hello
+  labels:
+    app: spring-boot-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-hello
+  template:
+    metadata:
+      labels:
+        app: spring-boot-hello
+    spec:
+      containers:
+      - name: springboot-container
+        image: naresh240/springboot-k8s:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080          

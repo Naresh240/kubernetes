@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment
+  namespace: nodejsdeploy
+  labels:
+    app: nodejs
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: nodejs
+  template:
+    metadata:
+      labels:
+        app: nodejs
+    spec:
+      containers:
+      - name: nodejs-deployment
+        image: naresh240/nodejsdeploy:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080

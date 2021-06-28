@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deployment-green
+  labels:
+    app: nodejs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: nodejs
+        version: v2
+    spec:
+      containers:
+      - name: nodejs-blue
+        image: naresh240/node-web-app:v2
+        ports:
+        - containerPort: 8080

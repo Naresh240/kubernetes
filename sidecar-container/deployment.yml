@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+spec:
+  selector:
+    matchLabels:
+      app: python-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+          - containerPort: 6379
+            name: http
+            protocol: TCP        
+      - name: python-app
+        image: naresh240/sidecar-python:latest
+        env:       
+          - name: "REDIS_HOST"
+            value: "localhost"

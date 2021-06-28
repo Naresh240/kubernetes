@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  ports:
+  - port: 80
+    name: http
+    targetPort: 5000
+  selector:
+    app: python-app
+  type: LoadBalancer

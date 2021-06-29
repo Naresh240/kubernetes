@@ -31,20 +31,20 @@ Step1: Creating sample user
 Step2: Creating a ClusterRoleBinding
   In most cases after provisioning cluster using kops, kubeadm or any other popular tool, the ClusterRole cluster-admin already exists in the cluster. We can use it and create only ClusterRoleBinding for our ServiceAccount. If it does not exist then you need to create this role first and grant required privileges manually.
   
-		cat <<EOF | kubectl apply -f -
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: ClusterRoleBinding
-		metadata:
-		name: admin-user
-		roleRef:
-		  apiGroup: rbac.authorization.k8s.io
-		  kind: ClusterRole
-		  name: cluster-admin
-		subjects:
-		- kind: ServiceAccount
-		  name: admin-user
-		  namespace: kubernetes-dashboard
-		EOF
+	cat <<EOF | kubectl apply -f -
+	apiVersion: rbac.authorization.k8s.io/v1
+	kind: ClusterRoleBinding
+	metadata:
+	  name: admin-user
+	roleRef:
+	  kind: ClusterRole
+	  name: cluster-admin
+	  apiGroup: rbac.authorization.k8s.io	  
+	subjects:
+	- kind: ServiceAccount
+	  name: admin-user
+	  namespace: kubernetes-dashboard
+	EOF
     
 # Getting a Bearer Token
     kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')

@@ -2,21 +2,21 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: airflow
-  region: us-west-1
-  version: "1.18"
+  name: eksdemo
+  region: us-east-1
+  version: "1.16"
 
 managedNodeGroups:
   - name: workers
-    instanceType: t2.large
+    instanceType: t2.medium
     privateNetworking: true
     desiredCapacity: 2
     minSize: 2
     maxSize: 4
-    volumeSize: 20
+    volumeSize: 10
     ssh:
       allow: true
-      publicKeyName: Naresh-california
+      publicKeyName: aws9pm
     labels: {role: worker}
     tags:
       nodegroup-role: worker

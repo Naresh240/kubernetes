@@ -16,4 +16,4 @@
 # Upgrade ````coredns````
     eksctl utils update-core-dns --cluster eksdemo --region us-east-1 --approve
 # Next need to be done node-group upgradation
-    [node-group upgradation](https://github.com/Naresh240/kubernetes/tree/main/cluster-upgradation/kubernetes-updating-nodegroup)
+  [node-group upgradation](https://github.com/Naresh240/kubernetes/tree/main/cluster-upgradation/kubernetes-updating-nodegroup)

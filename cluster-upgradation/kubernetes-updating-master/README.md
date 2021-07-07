@@ -3,9 +3,9 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
   1. upgrade control plane version with eksctl upgrade cluster
   2. update default add-ons:
   
-      kube-proxy
-      aws-node
-      coredns
+      * kube-proxy
+      * aws-node
+      * coredns
   3. replace each of the nodegroups by creating a new one and deleting the old one
 # Pre-Requisites
     Create Cluster with 1.18 or 1.19

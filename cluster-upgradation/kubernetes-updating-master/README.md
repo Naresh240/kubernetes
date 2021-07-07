@@ -24,4 +24,4 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
 # Upgrade ````coredns````
     eksctl utils update-coredns --cluster eksdemo --region us-east-1 --approve
 # Next need to be done node-group upgradation
-  [node-group upgradation](https://github.com/Naresh240/kubernetes/tree/main/cluster-upgradation/kubernetes-updating-nodegroup)
+  eksctl upgrade nodegroup --name=workers --cluster eksdemo --kubernetes-version=1.19 --region us-east-1

@@ -28,3 +28,4 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
     eksctl upgrade nodegroup --name=workers --cluster eksdemo --kubernetes-version=1.19 --region us-east-1 
                 or
     eksctl drain nodegroup --cluster eksdemo --name=workers-1.18 --region us-east-1
+    eksctl delete nodegroup --only-missing -f cluster.yml --approve

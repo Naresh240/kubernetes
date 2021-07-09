@@ -26,7 +26,9 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
 # Next need to be done node-group upgradation
     eksctl get nodegroups --cluster eksdemo --region us-east-1
 # Create new node-group by editing ````cluster.yml```` file like as ````cluster-update-nodegroups.yml````
+
   ````Process-I````
+  
     eksctl create nodegroups -f cluster.yml
     eksctl drain nodegroup --cluster eksdemo --name=workers-1.18 --region us-east-1
     eksctl delete nodegroup --only-missing -f cluster.yml --approve

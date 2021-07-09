@@ -25,7 +25,13 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
     eksctl utils update-coredns --cluster eksdemo --region us-east-1 --approve
 # Next need to be done node-group upgradation
     eksctl get nodegroups --cluster eksdemo --region us-east-1
-    eksctl upgrade nodegroup --name=workers --cluster eksdemo --kubernetes-version=1.19 --region us-east-1 
-                or
+# Create new node-group by editing ````cluster.yml```` file like as ````cluster-update-nodegroups.yml````
+  ````Process-I````
+    eksctl create nodegroups -f cluster.yml
     eksctl drain nodegroup --cluster eksdemo --name=workers-1.18 --region us-east-1
     eksctl delete nodegroup --only-missing -f cluster.yml --approve
+    
+  ````Process-II````
+    
+    eksctl upgrade nodegroup --name=workers --cluster eksdemo --kubernetes-version=1.19 --region us-east-1
+    

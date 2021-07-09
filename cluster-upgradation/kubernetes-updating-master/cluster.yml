@@ -7,7 +7,7 @@ metadata:
   version: "1.18"
 
 managedNodeGroups:
-  - name: workers-1.18
+  - name: workers-1
     instanceType: t2.medium
     privateNetworking: true
     desiredCapacity: 2

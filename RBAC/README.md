@@ -1,5 +1,5 @@
 # Pre-Requisites
-    - EKS Cluster
+    EKS Cluster
 # Create NameSpace ````devops````
     kubectl create ns devops
 # Create deployment
@@ -9,6 +9,16 @@
 # Create user in AWS and get AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
     vi rbacuser_creds.sh
   provide details and save file
+# Get ConfigMaps details
+    kubectl get configmaps aws-auth -n kube-system
+  ![image](https://user-images.githubusercontent.com/58024415/125119059-2a46b200-e10e-11eb-8524-63a9f4b5cf52.png)
+# Add User info to eks-cluster with in ConfigMaps file
+    kubectl edit configmaps aws-auth -n kube-system
+    --------------------------------------------------------
+    mapUsers: |
+      - userarn: arn:aws:iam::601279438670:user/naresh
+        username: naresh
+    --------------------------------------------------------        
 # Role Binding In RBAC:
 A role in Kubernetes RBAC defines what you will do to a group of resources. It contains a group of rules which define a set of permission.
 

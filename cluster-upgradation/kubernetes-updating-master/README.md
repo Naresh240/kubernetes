@@ -30,7 +30,7 @@ An eksctl-managed cluster can be upgraded in 3 easy steps:
   ````Process-I````
   
     eksctl create nodegroup -f cluster.yml
-    eksctl drain nodegroup --cluster eksdemo --name=workers-1.18 --region us-east-1
+    eksctl drain nodegroup --cluster eksdemo --name=workers-1-18 --region us-east-1
     eksctl delete nodegroup --only-missing -f cluster.yml --approve
     
   ````Process-II````

@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: helloworld
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - command:
+            - echo
+            - hello world
+            image: bash
+            imagePullPolicy: Always
+            name: hello
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+  schedule: '*/1 * * * *'
+  successfulJobsHistoryLimit: 3
+  suspend: false

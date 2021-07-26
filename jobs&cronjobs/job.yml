@@ -1,0 +1,16 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: helloworld
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello
+        image: bash
+        imagePullPolicy: Always		
+        command: ["echo",  "hello world"]
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30	  
+  backoffLimit: 4

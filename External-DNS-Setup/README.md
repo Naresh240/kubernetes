@@ -44,8 +44,5 @@
         --override-existing-serviceaccounts
  # Verify the Service Account:
     kubectl get sa external-dns
- Open Deploy-ExternalDNS.yml file replce external-dns role arn:
-  annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::057996059708:role/eksctl-eksdemo-addon-iamserviceaccount-defau-Role1-1VWNIU0P54SWC
  # Deploy External-dns yaml file
     kubectl apply -f external-dns.yml

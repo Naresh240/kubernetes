@@ -67,8 +67,8 @@
                 ]
             }
         ]
+      }
     EOF
-    }
 # Attach policy to velero IAM User:
      aws iam put-user-policy \
     --user-name velero \

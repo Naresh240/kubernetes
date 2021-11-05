@@ -27,5 +27,5 @@ spec:
           servicePort: use-annotation 
       - path: /
         backend:
-          serviceName: nodejs-service-green
+          serviceName: nodejs-service-blue
           servicePort:  8080

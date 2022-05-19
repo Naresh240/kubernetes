@@ -117,10 +117,17 @@ Create AWS IAM Policy "alb-ingress-controller-policy" with below Json code
 	eksctl  get iamserviceaccount --cluster eksdemo --region us-east-1
 	kubectl describe sa alb-ingress-controller -n kube-system
 # Deploy ALB Ingress Controller
-	yum install git -y
-	helm repo add eks https://aws.github.io/eks-charts
-	kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"
-	helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=eksdemo --set serviceAccount.create=false --set serviceAccount.name=alb-ingress-controller
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/master/docs/examples/alb-ingress-controller.yaml
+# Verify Deployment
+	kubectl get deploy -n kube-system
+# Edit ALB Ingress Controller Manifest:
+	kubectl edit deploy alb-ingress-controller -n kube-system
+# Replaced cluster-name with our cluster-name eksdemo1
+    spec:
+      containers:
+      - args:
+        - --ingress-class=alb
+        - --cluster-name=eksdemo
 # Verify our ALB Ingress Controller is running
 	# Verify if alb-ingress-controller pod is running
 	kubectl get pods -n kube-system

@@ -11,7 +11,7 @@
 	service docker start
 
 # Minikube setup:
-	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	curl -Lo minikube https://github.com/kubernetes/minikube/releases/download/v1.25.2/minikube-linux-amd64
 	chmod +x minikube
 	sudo mv minikube /usr/local/bin/
 	yum install conntrack -y

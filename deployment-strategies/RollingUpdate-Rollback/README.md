@@ -8,15 +8,15 @@
     - Create Hosted Zone with our Domain Name
     - External DNS Setup
 # EKS Cluster Setup:
-  [EKS Cluster Setup](https://github.com/Naresh240/eks-cluster-setup/blob/main/README.md)
+  [EKS Cluster Setup](https://github.com/Naresh240/kubernetes/blob/main/eks-cluster-setup/eks-cluster-with-eksctl/README.md)
 # ALB Ingress Controller Setup:
-  [ALB Ingress Controller](https://github.com/Naresh240/ALB-Ingress-Controller-Setup/blob/main/README.md)
+  [ALB Ingress Controller](https://github.com/Naresh240/kubernetes/blob/main/ALB-Ingress-Controller-Setup/README.md)
 # Create Hosted Zone with our Domain Name
 ![image](https://user-images.githubusercontent.com/58024415/94990966-7e2fd380-059d-11eb-8285-a82353f38c1a.png)
 # Request a Cerficate using Certificate Manager
 ![image](https://user-images.githubusercontent.com/58024415/94990930-301ad000-059d-11eb-9c5d-8ee47d494f82.png)
 # External DNS Setup:
-  [External DNS](https://github.com/Naresh240/External-DNS-Setup-Kubernetes/tree/main)
+  [External DNS](https://github.com/Naresh240/kubernetes/blob/main/External-DNS-Setup/README.md)
 # Install GIT:
     yum install git -y
 # Install npm:

@@ -1,17 +1,53 @@
 # ALB Install Ingress Controller:
 
-# Create a Kubernetes service account named alb-ingress-controller in the kube-system namespace
-	# List Service Accounts
-	kubectl get sa -n kube-system
-	
-	# Create ClusterRole, ClusterRoleBinding & ServiceAccount
-	kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/master/docs/examples/rbac-role.yaml
-	
-	# List Service Accounts
-	kubectl get sa -n kube-system
-  
-	# Describe Service Account alb-ingress-controller 
-	kubectl describe sa alb-ingress-controller -n kube-system
+> :note: Please create eks cluster with version 1.21 only
+## cluster setup
+```bash
+# eks master
+eksctl create cluster --name=eksdemo1 \
+                  --region=us-east-1 \
+				  --version=1.21 \
+                  --zones=us-east-1a,us-east-1b \
+                  --without-nodegroup 
+
+# eks nodegroup
+eksctl create nodegroup --cluster=eksdemo1 \
+                   --region=us-east-1 \
+                   --name=eksdemo-ng-public \
+                   --node-type=t2.large \
+                   --nodes=2 \
+                   --nodes-min=2 \
+                   --nodes-max=4 \
+                   --node-volume-size=10 \
+                   --ssh-access \
+                   --ssh-public-key=awsdevops \
+                   --managed \
+                   --asg-access \
+                   --external-dns-access \
+                   --full-ecr-access \
+                   --appmesh-access \
+                   --alb-ingress-access
+# OIDC provider
+eksctl utils associate-iam-oidc-provider \
+    --region us-east-1 \
+    --cluster eksdemo \
+--version=1.21 \
+--approve
+```
+## Create a Kubernetes service account named alb-ingress-controller in the kube-system namespace
+```bash
+# List Service Accounts
+kubectl get sa -n kube-system
+
+# Create ClusterRole, ClusterRoleBinding & ServiceAccount
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/master/docs/examples/rbac-role.yaml
+
+# List Service Accounts
+kubectl get sa -n kube-system
+ 
+# Describe Service Account alb-ingress-controller 
+kubectl describe sa alb-ingress-controller -n kube-system
+```
 	
 # Create policy using below json file:
 Create AWS IAM Policy "alb-ingress-controller-policy" with below Json code
@@ -105,14 +141,16 @@ Create AWS IAM Policy "alb-ingress-controller-policy" with below Json code
     }
 	
 # Create Role and attach policy to a Role:
-    eksctl create iamserviceaccount \
-        --region us-east-1 \
-        --name alb-ingress-controller \
-        --namespace kube-system \
-        --cluster eksdemo \
-        --attach-policy-arn arn:aws:iam::119159500181:policy/alb-ingress-controller-policy \
-	--override-existing-serviceaccounts \
-        --approve
+```bash
+eksctl create iamserviceaccount \
+     --region us-east-1 \
+     --name alb-ingress-controller \
+     --namespace kube-system \
+     --cluster eksdemo \
+     --attach-policy-arn arn:aws:iam::119159500181:policy/alb-ingress-controller-policy \
+     --override-existing-serviceaccounts \
+     --approve
+```
 # To check iam service account:
 	eksctl  get iamserviceaccount --cluster eksdemo --region us-east-1
 	kubectl describe sa alb-ingress-controller -n kube-system

@@ -4,14 +4,14 @@
 ## cluster setup
 ```bash
 # eks master
-eksctl create cluster --name=eksdemo1 \
+eksctl create cluster --name=eksdemo \
                   --region=us-east-1 \
 				  --version=1.21 \
                   --zones=us-east-1a,us-east-1b \
                   --without-nodegroup 
 
 # eks nodegroup
-eksctl create nodegroup --cluster=eksdemo1 \
+eksctl create nodegroup --cluster=eksdemo \
                    --region=us-east-1 \
                    --name=eksdemo-ng-public \
                    --node-type=t2.large \

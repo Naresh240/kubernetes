@@ -6,7 +6,7 @@
 # eks master
 eksctl create cluster --name=eksdemo \
                   --region=us-east-1 \
-				  --version=1.21 \
+		  --version=1.21 \
                   --zones=us-east-1a,us-east-1b \
                   --without-nodegroup 
 

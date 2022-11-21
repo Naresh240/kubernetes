@@ -31,8 +31,7 @@ eksctl create nodegroup --cluster=eksdemo \
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
     --cluster eksdemo \
---version=1.21 \
---approve
+    --approve
 ```
 ## Create a Kubernetes service account named alb-ingress-controller in the kube-system namespace
 ```bash

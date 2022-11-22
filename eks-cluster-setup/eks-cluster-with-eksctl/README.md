@@ -23,7 +23,6 @@
     eksctl utils associate-iam-oidc-provider \
         --region us-east-1 \
         --cluster eksdemo \
-	--version=1.21 \
 	--approve
 					  
 # Step7: Create node-group:

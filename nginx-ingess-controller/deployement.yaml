@@ -1,33 +1,22 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-boot-hello
+  name: nginx-deployment
   labels:
-    app: spring-boot-hello
+    app: nginx
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: spring-boot-hello
+      app: nginx
   template:
     metadata:
       labels:
-        app: spring-boot-hello
+        app: nginx
     spec:
       containers:
-      - name: spring-cloud-discovery
-        image: naresh240/springboothello:latest
+      - name: nginx
+        image: nginx:1.14.2
         ports:
-        - containerPort: 8081
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8081
-          initialDelaySeconds: 3
-          periodSeconds: 3
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8081
-          initialDelaySeconds: 3
-          periodSeconds: 3
+        - containerPort: 80

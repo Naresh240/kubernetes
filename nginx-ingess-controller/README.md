@@ -45,6 +45,13 @@ kubectl get pods
 kubectl get svc
 kubectl get ingress
 ```
+## Check in local
+
+```bash
+curl -k https://nginx.awsdevopstrainer.com
+(or)
+curl --insecure https://nginx.awsdevopstrainer.com
+```
 
 ## Check output for the application using dns name:
 

@@ -1,12 +1,10 @@
-# spring-boot-hello
+# nginx-ingess-controller
 
 ## Pre-requisites
+
 ```bash
  Install GIT
  EKS Cluster setup
- Create Hosted zone with domain name with in Route53
- Need to have cerified DNS with primary.key & certificate.crt
- Create CNAME record set for DNS name with in Hosted Zone
  ```
 
 ## Check Hosted zone with domain name with in ROute53
@@ -18,9 +16,11 @@
 ![image](https://user-images.githubusercontent.com/58024415/205474401-8cd3372e-9729-4f1e-8c01-d822515fe990.png)
 
 ## Cretificate ```openssl``` cretificate
+
 [openssl-create](https://github.com/Naresh240/ssl-and-tls-secret-kubernetes/blob/master/README.md)
 
 ## Deploy Nginx-Ingress-Controller using below commands
+
 ```bash
 cd nginx-ingress-controller
 kubectl apply -f .

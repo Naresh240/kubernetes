@@ -17,7 +17,8 @@
     eksctl create cluster --name=eksdemo \
                       --region=us-east-1 \
                       --zones=us-east-1a,us-east-1b \
-                      --without-nodegroup 
+		      --version 1.21 \
+		      --without-nodegroup 
 					  
 # Step6: Add Iam-Oidc-Providers:
     eksctl utils associate-iam-oidc-provider \
@@ -36,7 +37,7 @@
                        --nodes-max=4 \
                        --node-volume-size=10 \
                        --ssh-access \
-                       --ssh-public-key=ekscluster \
+                       --ssh-public-key=awsdevops \
                        --managed \
                        --asg-access \
                        --external-dns-access \

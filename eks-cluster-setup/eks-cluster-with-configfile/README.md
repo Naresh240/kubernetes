@@ -1,6 +1,6 @@
 # eks-cluster-with-configfile
 
-## Step1: Take EC2 Instance with t2.xlarge instance type
+## Step1: Take EC2 Instance with t2.micro instance type
 ## Step2: Create IAM Role with Admin policy for eks-cluster and attach to ec2-instance
 ## Step3: Install kubectl
 

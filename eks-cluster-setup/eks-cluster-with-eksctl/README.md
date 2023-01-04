@@ -31,7 +31,7 @@
     eksctl create nodegroup --cluster=eksdemo \
                        --region=us-east-1 \
                        --name=eksdemo-ng-public \
-                       --node-type=t2.large \
+                       --node-type=t2.small \
                        --nodes=2 \
                        --nodes-min=2 \
                        --nodes-max=4 \

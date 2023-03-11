@@ -55,7 +55,7 @@ aws iam create-policy \
 
 ```bash
 eksctl create iamserviceaccount \
-  --cluster=my-cluster \
+  --cluster=eksdemo \
   --region us-east-1 \
   --namespace=kube-system \
   --name=aws-load-balancer-controller \

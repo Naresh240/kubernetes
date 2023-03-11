@@ -1,12 +1,12 @@
 # ALB Install Ingress Controller:
 
-> :note: Please create eks cluster with version 1.21 only
+> :note: Please create eks cluster with version 1.24 only
 ## cluster setup
 ```bash
 # eks master
 eksctl create cluster --name=eksdemo \
                   --region=us-east-1 \
-		  --version=1.21 \
+		  --version=1.24 \
                   --zones=us-east-1a,us-east-1b \
                   --without-nodegroup 
 
@@ -33,141 +33,79 @@ eksctl utils associate-iam-oidc-provider \
     --cluster eksdemo \
     --approve
 ```
-## Create a Kubernetes service account named alb-ingress-controller in the kube-system namespace
+
+## Create policy using below json file:
+
+1. Download policy using below command
+
 ```bash
-# List Service Accounts
-kubectl get sa -n kube-system
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.4.7/docs/install/iam_policy.json
 
-# Create ClusterRole, ClusterRoleBinding & ServiceAccount
-kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/master/docs/examples/rbac-role.yaml
-
-# List Service Accounts
-kubectl get sa -n kube-system
- 
-# Describe Service Account alb-ingress-controller 
-kubectl describe sa alb-ingress-controller -n kube-system
 ```
-	
-# Create policy using below json file:
-Create AWS IAM Policy "alb-ingress-controller-policy" with below Json code
 
-    {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "VisualEditor0",
-                "Effect": "Allow",
-                "Action": [
-                    "wafv2:AssociateWebACL",
-                    "ec2:AuthorizeSecurityGroupIngress",
-                    "elasticloadbalancing:ModifyListener",
-                    "ec2:DescribeInstances",
-                    "wafv2:GetWebACLForResource",
-                    "elasticloadbalancing:RegisterTargets",
-                    "iam:ListServerCertificates",
-                    "wafv2:GetWebACL",
-                    "elasticloadbalancing:SetIpAddressType",
-                    "ec2:DescribeInternetGateways",
-                    "elasticloadbalancing:DeleteLoadBalancer",
-                    "elasticloadbalancing:SetWebAcl",
-                    "waf-regional:GetWebACLForResource",
-                    "elasticloadbalancing:DescribeLoadBalancers",
-                    "acm:GetCertificate",
-                    "waf-regional:GetWebACL",
-                    "shield:DescribeSubscription",
-                    "elasticloadbalancing:CreateRule",
-                    "ec2:DescribeAccountAttributes",
-                    "elasticloadbalancing:AddListenerCertificates",
-                    "elasticloadbalancing:ModifyTargetGroupAttributes",
-                    "waf:GetWebACL",
-                    "iam:GetServerCertificate",
-                    "wafv2:DisassociateWebACL",
-                    "ec2:CreateTags",
-                    "shield:GetSubscriptionState",
-                    "ec2:ModifyNetworkInterfaceAttribute",
-                    "elasticloadbalancing:CreateTargetGroup",
-                    "elasticloadbalancing:DeregisterTargets",
-                    "ec2:RevokeSecurityGroupIngress",
-                    "elasticloadbalancing:DescribeLoadBalancerAttributes",
-                    "acm:DescribeCertificate",
-                    "elasticloadbalancing:DescribeTargetGroupAttributes",
-                    "shield:CreateProtection",
-                    "elasticloadbalancing:ModifyRule",
-                    "elasticloadbalancing:AddTags",
-                    "elasticloadbalancing:DescribeRules",
-                    "ec2:DescribeSubnets",
-                    "elasticloadbalancing:ModifyLoadBalancerAttributes",
-                    "waf-regional:AssociateWebACL",
-                    "ec2:DescribeAddresses",
-                    "tag:GetResources",
-                    "ec2:DeleteTags",
-                    "shield:DescribeProtection",
-                    "shield:DeleteProtection",
-                    "elasticloadbalancing:RemoveListenerCertificates",
-                    "tag:TagResources",
-                    "elasticloadbalancing:RemoveTags",
-                    "elasticloadbalancing:CreateListener",
-                    "ec2:DescribeNetworkInterfaces",
-                    "elasticloadbalancing:DescribeListeners",
-                    "ec2:CreateSecurityGroup",
-                    "acm:ListCertificates",
-                    "elasticloadbalancing:DescribeListenerCertificates",
-                    "ec2:ModifyInstanceAttribute",
-                    "elasticloadbalancing:DeleteRule",
-                    "cognito-idp:DescribeUserPoolClient",
-                    "ec2:DescribeInstanceStatus",
-                    "elasticloadbalancing:DescribeSSLPolicies",
-                    "elasticloadbalancing:CreateLoadBalancer",
-                    "waf-regional:DisassociateWebACL",
-                    "ec2:DescribeTags",
-                    "elasticloadbalancing:DescribeTags",
-                    "elasticloadbalancing:SetSubnets",
-                    "elasticloadbalancing:DeleteTargetGroup",
-                    "ec2:DescribeSecurityGroups",
-                    "iam:CreateServiceLinkedRole",
-                    "ec2:DescribeVpcs",
-                    "ec2:DeleteSecurityGroup",
-                    "elasticloadbalancing:DescribeTargetHealth",
-                    "elasticloadbalancing:SetSecurityGroups",
-                    "elasticloadbalancing:DescribeTargetGroups",
-                    "shield:ListProtections",
-                    "elasticloadbalancing:ModifyTargetGroup",
-                    "elasticloadbalancing:DeleteListener"
-                ],
-                "Resource": "*"
-            }
-        ]
-    }
-	
-# Create Role and attach policy to a Role:
+2. Create an IAM policy using the policy downloaded
+
+```bash
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+```
+
+## Create Role and attach policy to a Role
+
 ```bash
 eksctl create iamserviceaccount \
-     --region us-east-1 \
-     --name alb-ingress-controller \
-     --namespace kube-system \
-     --cluster eksdemo \
-     --attach-policy-arn arn:aws:iam::119159500181:policy/alb-ingress-controller-policy \
-     --override-existing-serviceaccounts \
-     --approve
+  --cluster=my-cluster \
+  --region us-east-1 \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::111122223333:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve
 ```
-# To check iam service account:
-	eksctl  get iamserviceaccount --cluster eksdemo --region us-east-1
-	kubectl describe sa alb-ingress-controller -n kube-system
+
 # Deploy ALB Ingress Controller
-	kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/master/docs/examples/alb-ingress-controller.yaml
-# Verify Deployment
-	kubectl get deploy -n kube-system
-# Edit ALB Ingress Controller Manifest:
-	kubectl edit deploy alb-ingress-controller -n kube-system
-# Replaced cluster-name with our cluster-name eksdemo1
-    spec:
-      containers:
-      - args:
-        - --ingress-class=alb
-        - --cluster-name=eksdemo
-# Verify our ALB Ingress Controller is running
-	# Verify if alb-ingress-controller pod is running
-	kubectl get pods -n kube-system
-  
-	# Verify logs
-	kubectl logs -f $(kubectl get po -n kube-system | egrep -o 'alb-ingress-controller-[A-Za-z0-9-]+') -n kube-system
+
+1. Install cert-manager using one of the following method
+
+```bash
+kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+```
+
+2. Download the controller specification file
+
+```bash
+curl -Lo v2_4_7_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.4.7/v2_4_7_full.yaml
+```
+
+3. If you downloaded the v2_4_7_full.yaml file, run the following command to remove the ServiceAccount section in the manifest
+
+```bash
+sed -i.bak -e '561,569d' ./v2_4_7_full.yaml
+```
+
+4. Replace your-cluster-name in the Deployment spec section using below command
+
+```bash
+sed -i.bak -e 's|your-cluster-name|eksdemo|' ./v2_4_7_full.yaml
+```
+
+5. Apply file to deploy ALB Ingress Controller
+
+```bash
+kubectl apply -f v2_4_7_full.yaml
+```
+
+## Verify Deployment
+
+```bash
+kubectl get deploy -n kube-system
+```
+
+## Verify our ALB Ingress Controller is running
+
+```bash
+kubectl get pods -n kube-system
+```

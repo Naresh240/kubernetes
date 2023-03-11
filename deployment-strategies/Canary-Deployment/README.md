@@ -8,11 +8,11 @@
     - Request a Cerficate using Certificate Manager
     - Create Hosted Zone with our Domain Name
     - External DNS Setup
-# EKS Cluster Setup:
-  [EKS Cluster Setup](https://github.com/Naresh240/eks-cluster-setup/blob/main/README.md)
-# ALB Ingress Controller Setup:
-  [ALB Ingress Controller](https://github.com/Naresh240/ALB-Ingress-Controller-Setup/blob/main/README.md)
-# Istio Setup:
+# EKS Cluster Setup
+  [EKS Cluster Setup](https://github.com/Naresh240/kubernetes/blob/main/eks-cluster-setup/eks-cluster-with-eksctl/README.md)
+# ALB Ingress Controller Setup
+  [ALB Ingress Controller](https://github.com/Naresh240/kubernetes/blob/main/ALB-Ingress-Controller-Setup/README.md)
+# Istio Service Mesh Setup
   [Istio](https://github.com/Naresh240/Istio-Installation.git)
 # Create Hosted Zone with our Domain Name
 ![image](https://user-images.githubusercontent.com/58024415/94990966-7e2fd380-059d-11eb-8285-a82353f38c1a.png)

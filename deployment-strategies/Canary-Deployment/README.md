@@ -55,9 +55,9 @@ Push Docker image to docker hub with tag v2:
 # Create an Istio Gateway, VirtualService and default destination rules
     kubectl apply -f istio-rules.yml
 # Check Istio Gateway
-    kubectl get gateway -n istio-system
-    kubectl get virtualservice -n istio-system
-    kubectl get destinationRule -n istio-system
+    kubectl get gateway
+    kubectl get virtualservice
+    kubectl get destinationRule
 # Run ingress for checking output with DNS name
     kubectl apply -f ingress.yml
 # Check Load Balancer of ALB ingress controller attached to ingress or not

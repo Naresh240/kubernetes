@@ -12,7 +12,7 @@
     docker login
     docker push naresh240/application-cpu:latest
 # Deploy Metrics in Cluster
-    kubectl apply -f ./metrics-server
+    kubectl apply -f ../metric-server-manifest.yaml
 # Install Vertical Pod Autoscaler
     git clone https://github.com/kubernetes/autoscaler.git
     cd autoscaler

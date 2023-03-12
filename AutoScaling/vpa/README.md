@@ -16,7 +16,6 @@
 # Install Vertical Pod Autoscaler
     git clone https://github.com/kubernetes/autoscaler.git
     cd autoscaler
-    git checkout vpa-release-0.8
     cd vertical-pod-autoscaler
     ./hack/vpa-up.sh
 # Deploy Application

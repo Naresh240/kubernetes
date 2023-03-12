@@ -32,7 +32,7 @@
     kubectl get all
 ![image](https://user-images.githubusercontent.com/58024415/95016236-5610a500-066f-11eb-9779-2c538af6bbd4.png)
 # If you want see horizontal pod autoscaling we need metrics
-    kubectl apply -f metrics-server
+    kubectl apply -f ../metric-server-manifest.yaml
 # Run HPA for our Nodejs application
     kubectl apply -f hpa.yml
 # Check all inside kubernetes:

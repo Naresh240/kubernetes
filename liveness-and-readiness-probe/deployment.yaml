@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-hello
+  labels:
+    app: springboot-hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springboot-hello
+  template:
+    metadata:
+      labels:
+        app: springboot-hello
+    spec:
+      containers:
+      - name: springboot-hello
+        image: naresh240/springboothello:v1
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 3

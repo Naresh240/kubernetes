@@ -14,7 +14,7 @@ spec:
   - host: "springboothello.awsdevopstrainer.com"
     http:
       paths:
-      - path: /* # SSL Redirect Setting
+      - path: / # SSL Redirect Setting
         pathType: Prefix
         backend:
           service:

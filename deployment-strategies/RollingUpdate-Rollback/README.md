@@ -1,4 +1,4 @@
-# Blue Green Deployment NodejsApp
+# Rolling Update and Rollback Deployment NodejsApp
 
 # Pre-requisites:
     - Install GIT

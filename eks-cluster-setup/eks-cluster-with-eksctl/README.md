@@ -19,15 +19,8 @@
                       --zones=us-east-1a,us-east-1b \
 		      --version 1.24 \
 		      --without-nodegroup 
-					  
-# Step6: Add Iam-Oidc-Providers:
-    eksctl utils associate-iam-oidc-provider \
-        --region us-east-1 \
-        --cluster eksdemo \
-	--version 1.24 \
-	--approve
-					  
-# Step7: Create node-group:
+
+# Step6: Create node-group:
     eksctl create nodegroup --cluster=eksdemo \
                        --region=us-east-1 \
                        --name=eksdemo-ng-public \
@@ -44,7 +37,12 @@
                        --full-ecr-access \
                        --appmesh-access \
                        --alb-ingress-access	
-					   
+# Step7: Add Iam-Oidc-Providers:
+    eksctl utils associate-iam-oidc-provider \
+        --region us-east-1 \
+        --cluster eksdemo \
+	--approve
+ 
 # CleanUP
 Delete node-group:
 			   

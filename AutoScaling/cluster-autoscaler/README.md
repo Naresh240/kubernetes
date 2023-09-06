@@ -54,7 +54,7 @@ kubectl apply -f service-account.yml
 2. Create IRSA
 
    ```shell
-	   eksctl create iamserviceaccount \
+     eksctl create iamserviceaccount \
 	  --cluster=eksdemo \
 	  --region us-east-1 \
 	  --namespace=kube-system \

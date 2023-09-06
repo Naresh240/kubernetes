@@ -23,7 +23,7 @@ kubectl apply -f service-account.yml
 
 1. Create policy with below json file
    ```json
-	   {
+	{
 	  "Version": "2012-10-17",
 	  "Statement": [
 	    {
@@ -54,15 +54,15 @@ kubectl apply -f service-account.yml
 2. Create IRSA
 
    ```shell
-   eksctl create iamserviceaccount \
-  --cluster=eksdemo \
-  --region us-east-1 \
-  --namespace=kube-system \
-  --name=cluster-autoscaler \
-  --role-name AutoscalerAole \
-  --attach-policy-arn=arn:aws:iam::066289642577:policy/AutoScalerIAMPolicy \
-  --approve
-  --override-existing-serviceaccounts
+	   eksctl create iamserviceaccount \
+	  --cluster=eksdemo \
+	  --region us-east-1 \
+	  --namespace=kube-system \
+	  --name=cluster-autoscaler \
+	  --role-name AutoscalerAole \
+	  --attach-policy-arn=arn:aws:iam::066289642577:policy/AutoScalerIAMPolicy \
+	  --approve
+	  --override-existing-serviceaccounts
    ```
 
 ## Run Cluster Autoscaler yaml file

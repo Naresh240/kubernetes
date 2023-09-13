@@ -1,0 +1,6 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-v1
+spec:
+  replicas: 3

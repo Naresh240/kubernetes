@@ -15,3 +15,16 @@ kubectl apply -f springboot.yaml
 kubectl apply -f ingress.yaml
 ```
 
+4. Create records under Hosted zone
+
+![image](https://github.com/Naresh240/springboot-hello/assets/58024415/3add4d87-d649-4c5d-90d0-39585b22c7a4)
+
+5. Check applications output
+
+>https://www.devopstechtrainer.com/
+
+![image](https://github.com/Naresh240/springboot-hello/assets/58024415/5dbd1866-6945-4d8f-80dc-20d38ea6bf58)
+
+>https://www.devopstechtrainer.com/hello
+
+![image](https://github.com/Naresh240/springboot-hello/assets/58024415/2f9e5327-d83f-4b7b-ad72-588d8f0e7ff3)

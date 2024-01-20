@@ -28,4 +28,5 @@ kubectl apply -f ingress.yaml
 
 >https://springboot.devopstechtrainer.com/
 
-![image](https://github.com/Naresh240/springboot-hello/assets/156821153/ede2a7cf-1628-49d8-94cf-b60445f45dd8)
+![image](https://github.com/Naresh240/springboot-hello/assets/58024415/0e753fdd-5ca4-4206-8358-ebae6b56d50a)
+

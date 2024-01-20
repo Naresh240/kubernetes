@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: springboot
-        image: naresh240/springboot-hostbased:v1
+        image: naresh240/springboot-pathbased:v1
         ports:
         - containerPort: 8080
 

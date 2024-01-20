@@ -1,4 +1,4 @@
-# Host Bbased Routing
+# Host Based Routing
 
 1. Create hosted zone in Route53 with same of domain
 

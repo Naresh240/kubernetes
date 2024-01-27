@@ -28,11 +28,11 @@ spec:
     - destination:
         host: nodejs
         subset: v1
-      weight: 80
+      weight: 0
     - destination:
         host: nodejs
         subset: v2
-      weight: 20
+      weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule

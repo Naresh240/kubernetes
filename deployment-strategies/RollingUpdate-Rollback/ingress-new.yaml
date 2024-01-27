@@ -7,11 +7,11 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:035756276524:certificate/6a8b4e5e-39d9-4061-9b6c-a26ac11d5a4e
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:353873910536:certificate/a30b4461-3eef-405a-98dc-df4301739836
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
 spec:
   rules:
-  - host: "springboothello.awsdevopstrainer.com"
+  - host: "nodejs.devopstechtrainer.com"
     http:
       paths:
       - path: / # SSL Redirect Setting

@@ -8,4 +8,4 @@ spec:
     kind:       Deployment
     name:       application-cpu
   updatePolicy:
-    updateMode: "Off"
+    updateMode: "Auto"

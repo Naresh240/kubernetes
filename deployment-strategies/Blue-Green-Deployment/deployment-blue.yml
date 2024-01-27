@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: nodejs-blue
-        image: naresh240/node-web-app:v1
+        image: naresh240/node-web-app:v3
         ports:
         - containerPort: 8080

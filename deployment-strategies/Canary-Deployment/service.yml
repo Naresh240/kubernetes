@@ -13,4 +13,3 @@ spec:
   - name: http
     port: 8080
     nodePort: 30001
-

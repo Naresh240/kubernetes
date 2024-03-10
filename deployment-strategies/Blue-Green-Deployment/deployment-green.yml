@@ -9,15 +9,15 @@ spec:
   selector:
     matchLabels:
       app: nodejs
-      version: v2
+      version: green
   template:
     metadata:
       labels:
         app: nodejs
-        version: v2
+        version: green
     spec:
       containers:
-      - name: nodejs-blue
-        image: naresh240/node-web-app:v2
+      - name: nodejs-green
+        image: naresh240/nodejs-k8s:v2
         ports:
         - containerPort: 8080

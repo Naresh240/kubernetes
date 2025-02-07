@@ -11,33 +11,34 @@
 [ALB Ingress Controller](https://github.com/Naresh240/ALB-Ingress-Controller-Setup/blob/main/README.md)
 
 # External DNS Setup
-Create file with the name of ```external-dns-policy``` and add below content
+Create file with the name of ```external-dns-policy.json``` and add below content
 
 ```json
 {
     "Version": "2012-10-17",
     "Statement": [
-        {
+      {
         "Effect": "Allow",
         "Action": [
-            "route53:ChangeResourceRecordSets"
+          "route53:ChangeResourceRecordSets"
         ],
         "Resource": [
-            "arn:aws:route53:::hostedzone/*"
+          "arn:aws:route53:::hostedzone/*"
         ]
-        },
-        {
+      },
+      {
         "Effect": "Allow",
         "Action": [
-            "route53:ListHostedZones",
-            "route53:ListResourceRecordSets"
+          "route53:ListHostedZones",
+          "route53:ListResourceRecordSets",
+          "route53:ListTagsForResource"
         ],
         "Resource": [
-            "*"
+          "*"
         ]
-        }
+      }
     ]
-}
+  }
 ```
 
 Create external-dns policy using below command:

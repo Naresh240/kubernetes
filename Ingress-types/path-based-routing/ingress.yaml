@@ -2,16 +2,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
+  name: springboot-path-ingress
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:353873910536:certificate/e08cb3bc-a36e-49b0-8b32-5361dd413782
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:042105353901:certificate/07abe8cf-3bdf-4872-a039-e915fb57ec1d
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'    
 spec:
   rules:
-  - host: www.devopstechtrainer.com
+  - host: www.awsdevopstrainings.com
     http:    
       paths:
       - path: / # SSL Redirect Setting
@@ -25,13 +25,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: springboot-service
+            name: springboot-path-service
             port:
               number: 8080     
       - path: /hello
         pathType: Prefix
         backend:
           service:
-            name: springboot-service
+            name: springboot-path-service
             port:
               number: 8080

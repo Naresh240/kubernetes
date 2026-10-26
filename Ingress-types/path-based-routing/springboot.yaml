@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springboot-deployment
+  name: springboot-path-deployment
   labels:
-    app: springboot
+    app: springboot-path
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: springboot
+      app: springboot-path
   template:
     metadata:
       labels:
-        app: springboot
+        app: springboot-path
     spec:
       containers:
       - name: springboot
@@ -25,13 +25,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: springboot-service
+  name: springboot-path-service
 spec:
   type: NodePort
   selector:
-    app: springboot
+    app: springboot-path
   ports:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30001
+      nodePort: 30003

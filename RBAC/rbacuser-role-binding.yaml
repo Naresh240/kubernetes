@@ -3,10 +3,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: read-pods
-  namespace: devops
+  namespace: default
 subjects:
 - kind: User
-  name: naresh
+  name: devops
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role

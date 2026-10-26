@@ -7,7 +7,7 @@ spec:
   type: NodePort
   selector:
     app: nodejs
-    version: green
+    version: blue
   ports:
     - protocol: TCP
       port: 8080

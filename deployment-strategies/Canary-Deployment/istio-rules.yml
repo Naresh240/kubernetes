@@ -26,11 +26,11 @@ spec:
   http:
   - route:
     - destination:
-        host: nodejs
+        host: nodejs-service
         subset: v1
       weight: 0
     - destination:
-        host: nodejs
+        host: nodejs-service
         subset: v2
       weight: 100
 ---

@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: devops
+  namespace: default
   name: pod-reader
 rules:
 - apiGroups: [""] # "" indicates the core API group

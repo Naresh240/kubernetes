@@ -1,0 +1,20 @@
+server:
+  service:
+    type: ClusterIP
+  persistentVolume:
+    enabled: true
+    size: 10Gi
+    storageClass: ebs-gp3
+
+alertmanager:
+  persistence:
+    enabled: true
+    size: 2Gi
+    storageClass: ebs-gp3
+
+scrapeConfigs:
+  kubernetes-nodes-cadvisor:
+    enabled: true
+
+# The Prometheus Helm chart creates svc/prometheus-server in the monitoring namespace.
+# Grafana should point to http://prometheus-server.monitoring.svc.cluster.local:80

@@ -1,0 +1,255 @@
+# grafana-values.yaml
+
+admin:
+  existingSecret: grafana-admin
+  userKey: admin-user
+  passwordKey: admin-password
+
+persistence:
+  enabled: true
+  type: pvc
+  storageClassName: ebs-gp3
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server.monitoring.svc.cluster.local:80
+        isDefault: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+      - name: default
+        orgId: 1
+        folder: EKS Monitoring
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    cluster-health:
+      json: |
+        {
+          "title": "Cluster Health",
+          "timezone": "browser",
+          "schemaVersion": 39,
+          "version": 1,
+          "refresh": "30s",
+          "editable": true,
+          "style": "dark",
+          "graphTooltip": 0,
+          "time": {
+            "from": "now-30m",
+            "to": "now"
+          },
+          "templating": {
+            "list": []
+          },
+          "panels": [
+            {
+              "type": "stat",
+              "title": "Node Health",
+              "id": 1,
+              "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+              "datasource": "Prometheus",
+              "targets": [
+                {
+                  "expr": "sum(kube_node_status_condition{condition=\"Ready\",status=\"true\"})",
+                  "legendFormat": "Healthy Nodes",
+                  "refId": "A"
+                }
+              ],
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "short",
+                  "color": { "mode": "thresholds" },
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      { "color": "red", "value": null },
+                      { "color": "yellow", "value": 1 },
+                      { "color": "green", "value": 2 }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "options": {
+                "reduceOptions": {
+                  "values": false,
+                  "calcs": ["lastNotNull"],
+                  "fields": ""
+                },
+                "graphMode": "none",
+                "colorMode": "background",
+                "justifyMode": "center",
+                "textMode": "value_and_name"
+              }
+            },
+            {
+              "type": "timeseries",
+              "title": "Node Up Status",
+              "id": 4,
+              "gridPos": { "h": 8, "w": 8, "x": 12, "y": 8 },
+              "datasource": "Prometheus",
+              "targets": [
+                {
+                  "expr": "up{job=\"kubernetes-service-endpoints\"}",
+                  "legendFormat": "{{instance}}",
+                  "refId": "A"
+                }
+              ],
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "short",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      { "color": "red", "value": null },
+                      { "color": "green", "value": 1 }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          ],
+          "annotations": {
+            "list": []
+          }
+        }
+    node-overview:
+      json: |
+        {
+          "title": "Node Overview",
+          "timezone": "browser",
+          "schemaVersion": 39,
+          "version": 1,
+          "refresh": "30s",
+          "editable": true,
+          "style": "dark",
+          "graphTooltip": 0,
+          "time": {
+            "from": "now-1h",
+            "to": "now"
+          },
+          "templating": { "list": [] },
+          "panels": [
+            {
+              "type": "stat",
+              "title": "Total Nodes",
+              "id": 1,
+              "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "count(kube_node_info)", "legendFormat": "Nodes", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+              "options": { "reduceOptions": { "values": false, "calcs": ["lastNotNull"], "fields": "" }, "graphMode": "none", "colorMode": "background", "justifyMode": "center", "textMode": "value_and_name" }
+            },
+            {
+              "type": "timeseries",
+              "title": "Node CPU Usage (%)",
+              "id": 2,
+              "gridPos": { "h": 8, "w": 12, "x": 6, "y": 0 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{job=\"kubernetes-service-endpoints\",mode=\"idle\"}[5m])) * 100)", "legendFormat": "{{instance}}", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 }, "overrides": [] }
+            },
+            {
+              "type": "timeseries",
+              "title": "Node Memory Usage (%)",
+              "id": 3,
+              "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "100 * (1 - (avg by (instance) (node_memory_MemAvailable_bytes{job=\"kubernetes-service-endpoints\"}) / avg by (instance) (node_memory_MemTotal_bytes{job=\"kubernetes-service-endpoints\"})))", "legendFormat": "{{instance}}", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 }, "overrides": [] }
+            },
+            {
+              "type": "timeseries",
+              "title": "Filesystem Usage (%)",
+              "id": 4,
+              "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "100 - (avg by (instance) (node_filesystem_avail_bytes{job=\"kubernetes-service-endpoints\"}) / avg by (instance) (node_filesystem_size_bytes{job=\"kubernetes-service-endpoints\"}) * 100)", "legendFormat": "{{instance}}", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "percent", "min": 0, "max": 100 }, "overrides": [] }
+            }
+          ],
+          "annotations": { "list": [] }
+        }
+    pod-overview:
+      json: |
+        {
+          "title": "Pod Overview",
+          "timezone": "browser",
+          "schemaVersion": 39,
+          "version": 1,
+          "refresh": "30s",
+          "editable": true,
+          "style": "dark",
+          "graphTooltip": 0,
+          "time": {
+            "from": "now-1h",
+            "to": "now"
+          },
+          "templating": { "list": [] },
+          "panels": [
+            {
+              "type": "stat",
+              "title": "Total Pods",
+              "id": 1,
+              "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "count(kube_pod_info{job=\"kubernetes-service-endpoints\"})", "legendFormat": "Pods", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+              "options": { "reduceOptions": { "values": false, "calcs": ["lastNotNull"], "fields": "" }, "graphMode": "none", "colorMode": "background", "justifyMode": "center", "textMode": "value_and_name" }
+            },
+            {
+              "type": "stat",
+              "title": "Running Pods",
+              "id": 2,
+              "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "sum(kube_pod_status_phase{job=\"kubernetes-service-endpoints\",phase=\"Running\"})", "legendFormat": "Running", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+              "options": { "reduceOptions": { "values": false, "calcs": ["lastNotNull"], "fields": "" }, "graphMode": "none", "colorMode": "background", "justifyMode": "center", "textMode": "value_and_name" }
+            },
+            {
+              "type": "timeseries",
+              "title": "Pods by Namespace",
+              "id": 3,
+              "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "count by (namespace) (kube_pod_info{job=\"kubernetes-service-endpoints\"})", "legendFormat": "{{namespace}}", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+            },
+            {
+              "type": "timeseries",
+              "title": "Pod Restarts",
+              "id": 4,
+              "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "sum(kube_pod_container_status_restarts_total{job=\"kubernetes-service-endpoints\"})", "legendFormat": "Restarts", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+            },
+            {
+              "type": "timeseries",
+              "title": "Pods by Resource Type",
+              "id": 5,
+              "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+              "datasource": "Prometheus",
+              "targets": [{ "expr": "count by (owner_kind) (kube_pod_owner{job=\"kubernetes-service-endpoints\"})", "legendFormat": "{{owner_kind}}", "refId": "A" }],
+              "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] }
+            }
+          ],
+          "annotations": { "list": [] }
+        }
